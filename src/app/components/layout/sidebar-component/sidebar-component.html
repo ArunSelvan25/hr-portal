@@ -1,0 +1,49 @@
+<!-- Sidebar Wrapper -->
+<div
+  class="fixed inset-y-0 left-0 z-50 w-64 shadow-lg transform transition-transform duration-300 ease-in-out"
+  [class.translate-x-0]="layoutService.isSidebarOpen()"
+  [class.-translate-x-full]="!layoutService.isSidebarOpen()"
+>
+  <!-- Sidebar Content -->
+  <div class="flex flex-col h-full">
+    <!-- Logo -->
+    <div class="h-49 flex items-center justify-center md:justify-start border-b border-gray-100 px-3">
+      <i class="fas fa-building text-[#ff6c1a] text-xl mx-1 w-6 min-w-[24px] text-center"></i>
+      <h1
+        class="hidden md:block text-lg font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent ml-2 truncate"
+      >
+        Portal
+      </h1>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 py-1 px-1 text-xs font-medium overflow-y-auto">
+      @for (sidebarMenu of sidebarMenus(); track sidebarMenu.id) {
+        <button
+          type="button"
+          (click)="navigateToPage(sidebarMenu.id)"
+          class="flex items-center w-full px-2 py-2 my-1 rounded-md transition-colors duration-200 cursor-pointer"
+          [ngClass]="{
+            'bg-[#ff6c1a] text-white': activeUrl() === sidebarMenu.link,
+            'text-gray-700 hover:bg-[#ff6c1a] hover:text-white': activeUrl() !== sidebarMenu.link
+          }"
+        >
+          <i class="fas w-5 min-w-[24px] text-center mx-1" [class]="sidebarMenu.icon"></i>
+          <span class="hidden md:inline ml-2 truncate">{{ sidebarMenu.name }}</span>
+        </button>
+      }
+    </nav>
+
+    <!-- Logout -->
+    <div class="p-2 border-t border-gray-100">
+      <button
+        type="button"
+        class="w-full flex items-center justify-center md:justify-start px-2 py-2 rounded-md text-red-600 hover:bg-red-50 transition-colors duration-200 text-sm font-semibold"
+        (click)="logout()"
+      >
+        <i class="fas fa-sign-out-alt w-5 min-w-[24px] text-center mx-1"></i>
+        <span class="hidden md:inline ml-1">Logout</span>
+      </button>
+    </div>
+  </div>
+</div>

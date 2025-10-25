@@ -1,0 +1,25 @@
+<div class="flex h-screen bg-gray-200">
+  <!-- Sidebar -->
+  <aside
+    class="hidden md:flex md:flex-col w-12 hover:w-40 bg-white transition-all duration-300 backdrop-blur-xl shadow-lg overflow-hidden"
+  >
+    <app-sidebar-component></app-sidebar-component>
+  </aside>
+
+  <!-- Main Section -->
+  <div class="flex-1 flex flex-col">
+    <!-- Navbar -->
+    <header
+      class="sticky top-0 z-40 backdrop-blur-md border-b border-gray-100 shadow-xs bg-white"
+    >
+      <app-navbar-component></app-navbar-component>
+    </header>
+
+    <!-- Page Content -->
+    <main
+      class="flex-1 overflow-y-auto p-2 md:p-4"
+    >
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
