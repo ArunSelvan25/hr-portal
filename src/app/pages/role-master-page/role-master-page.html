@@ -1,246 +1,267 @@
-<div class="p-6 bg-white min-h-screen">
-  <h1 class="text-xl font-semibold text-gray-900">Teams</h1>
+<div class="bg-white mt-2 rounded-md shadow-md h-[calc(100vh-4rem)] overflow-hidden">
+  <div class="p-4 overflow-y-auto h-full">
+    <h1 class="text-xl font-semibold text-gray-900">Teams</h1>
 
-  <!-- Header -->
-  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-    <div>
-      <h2 class="text-lg text-gray-600 mt-1">Teams</h2>
-    </div>
-    <button 
-      (click)="openPopup()"
-      type="button" 
-      class="inline-flex items-center gap-x-2 rounded-xl
-        text-gray-800 px-4 py-2 text-sm font-semibold shadow-md hover:shadow-lg hover:scale-[1.02] hover:border-indigo-200
-        transition-all duration-200 ease-out bg-gray-200 border border-transparent focus:outline-none 
-        focus:ring-2 focus:ring-indigo-100/40 active:scale-[0.98] cursor-pointer">
-      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-        </svg>
-        Add Team
-    </button>
-  </div>
-
-  <!-- Table Card -->
-  <div class="bg-white shadow-lg rounded-xl overflow-hidden border border-gray-200">
-    <div class="overflow-x-auto">
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
-          <tr>
-            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Roles</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-          </tr>
-        </thead>
-
-        <tbody class="bg-white divide-y divide-gray-100">
-            @for (team of masterService.teamsList(); track team.id) {
-                <tr class="hover:bg-gray-100 transition-colors group">
-                  <td class="px-4 py-2 border border-gray-100 whitespace-nowrap text-sm text-gray-500 text-center">{{ team.id }}</td>
-                  <td class="px-4 py-2 border border-gray-100 whitespace-nowrap text-sm text-gray-800 font-medium">{{ team.name }}</td>
-                  <td class="px-4 py-2 border border-gray-100 whitespace-nowrap text-sm text-gray-800 font-medium">
-                      <ul class="flex flex-wrap gap-2">
-                        @for (role of team.roles; track role.id) {
-                          <li class="px-3 py-1 rounded-full shadow-sm text-xs hover:bg-gray-600 hover:text-white transition-colors">
-                            {{ role.name }}
-                          </li>
-                        }
-                      </ul>
-                  </td>
-                  <td class="px-4 py-2 border border-gray-100 whitespace-nowrap">
-                    <span class="px-3 py-1 text-xs font-semibold rounded-full">
-                        {{ team.status | titlecase }}
-                    </span>
-                  </td>
-                  <td class="px-4 py-2 whitespace-nowrap text-center">
-                      <button class="text-gray-500 hover:text-gray-900 font-semibold opacity-100 group-hover:opacity-100 transition-opacity cursor-pointer">
-                          Edit
-                      </button>
-                  </td>
-                </tr>
-            }
-
-            @if (masterService.designations().length === 0) {
-          <tr>
-            <td colspan="4" class="px-6 py-4 text-center text-gray-400">No designations found.</td>
-          </tr>
-            }
-
-        </tbody>
-      </table>
-    </div>
-
-    <div class="flex flex-col sm:flex-row items-center justify-between px-6 py-3 bg-gray-50 border-t border-gray-200 gap-2">
-      <div class="text-sm text-gray-600">
-        <span class="font-medium">1-10</span> of <span class="font-medium">50</span>
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+      <div>
+        <h2 class="text-lg text-gray-600 mt-1">Teams</h2>
       </div>
-      <div class="flex items-center gap-2">
-        <button class="p-2 bg-white border border-gray-300 rounded-md hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+      <button 
+        (click)="openPopup()"
+        type="button" 
+        class="inline-flex items-center gap-x-2 rounded-xl
+          text-gray-800 px-4 py-2 text-xs font-semibold shadow-md hover:shadow-lg hover:scale-[1.02] hover:border-indigo-200
+          transition-all duration-200 ease-out bg-gray-200 border border-transparent focus:outline-none 
+          focus:ring-2 focus:ring-indigo-100/40 active:scale-[0.98] cursor-pointer">
+        <svg class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
           </svg>
-        </button>
-        <button class="p-2 bg-white border border-gray-300 rounded-md hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-          </svg>
-        </button>
+          Add Team
+      </button>
+    </div>
+
+    <!-- Table Card -->
+    <div class="bg-white shadow-lg rounded-xl overflow-hidden border border-gray-200">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Roles</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody class="bg-white divide-y divide-gray-100">
+              @for (team of masterService.teamsList(); track team.id) {
+                  <tr class="hover:bg-gray-100 transition-colors group">
+                    <td class="px-4 py-2 border border-gray-100 whitespace-nowrap text-xs text-gray-500 text-center">{{ team.id }}</td>
+                    <td class="px-4 py-2 border border-gray-100 whitespace-nowrap text-xs text-gray-800 font-medium">{{ team.name }}</td>
+                    <td class="px-4 py-2 border border-gray-100 whitespace-nowrap text-xs text-gray-800 font-medium">
+                        <ul class="flex flex-wrap gap-2">
+                          @for (role of team.roles; track role.id) {
+                            <li class="px-3 py-1 rounded-full shadow-sm text-xs hover:bg-gray-600 hover:text-white transition-colors">
+                              {{ role.name }}
+                            </li>
+                          }
+                        </ul>
+                    </td>
+                    <td class="px-4 py-2 border border-gray-100 whitespace-nowrap">
+                      <span class="px-3 py-1 text-xs font-semibold rounded-full">
+                          {{ team.status | titlecase }}
+                      </span>
+                    </td>
+                    <td class="px-4 py-2 whitespace-nowrap text-center">
+                        <button class="text-gray-500 hover:text-gray-900 font-semibold opacity-100 group-hover:opacity-100 transition-opacity text-xs cursor-pointer">
+                            Edit
+                        </button>
+                    </td>
+                  </tr>
+              }
+
+              @if (masterService.designations().length === 0) {
+            <tr>
+              <td colspan="4" class="px-6 py-4 text-center text-gray-400">No designations found.</td>
+            </tr>
+              }
+
+          </tbody>
+        </table>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-between px-6 py-3 bg-gray-50 border-t border-gray-200 gap-2">
+        <div class="text-sm text-gray-600">
+          <span class="font-medium">1-10</span> of <span class="font-medium">50</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="p-2 bg-white border border-gray-300 rounded-md hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+            </svg>
+          </button>
+          <button class="p-2 bg-white border border-gray-300 rounded-md hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Header -->
-  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4 mt-8">
-    <div>
-      <h2 class="text-lg text-gray-600 mt-1">Designations</h2>
-    </div>
-    <button 
-      (click)="masterService.toggleShowDesignationPopup()"
-      type="button" 
-      class="inline-flex items-center gap-x-2 rounded-xl
-        text-gray-800 px-4 py-2 text-sm font-semibold shadow-md hover:shadow-lg hover:scale-[1.02] hover:border-indigo-200
-        transition-all duration-200 ease-out bg-gray-200 border border-transparent focus:outline-none 
-        focus:ring-2 focus:ring-indigo-100/40 active:scale-[0.98] cursor-pointer">
-      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-        </svg>
-        Add Designation
-    </button>
-  </div>
-
-  <div class="bg-white shadow-lg rounded-xl overflow-hidden border border-gray-200">
-    <div class="overflow-x-auto">
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
-          <tr>
-            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-          </tr>
-        </thead>
-
-        <tbody class="bg-white divide-y divide-gray-100">
-            @for (designation of masterService.designations(); track designation.id) {
-                <tr class="hover:bg-gray-100 transition-colors group">
-                  <td class="px-4 py-2 border border-gray-100 whitespace-nowrap text-sm text-gray-500 text-center">{{ designation.id }}</td>
-                  <td class="px-4 py-2 border border-gray-100 whitespace-nowrap text-sm text-gray-800 font-medium">{{ designation.name }}</td>
-                  <td class="px-4 py-2 border border-gray-100 whitespace-nowrap">
-                    <span class="px-3 py-1 text-xs font-semibold rounded-full">
-                        {{ designation.status | titlecase }}
-                    </span>
-                  </td>
-                  <td class="px-4 py-2 whitespace-nowrap text-center">
-                      <button (click)="editDesignation(designation)" class="text-gray-500 hover:text-gray-900 font-semibold opacity-100 group-hover:opacity-100 transition-opacity cursor-pointer">
-                          Edit
-                      </button>
-                  </td>
-                </tr>
-            }
-
-            @if (masterService.designations().length === 0) {
-          <tr>
-            <td colspan="4" class="px-6 py-4 text-center text-gray-400">No designations found.</td>
-          </tr>
-            }
-
-        </tbody>
-      </table>
-    </div>
-
-    <div class="flex flex-col sm:flex-row items-center justify-between px-6 py-3 bg-gray-50 border-t border-gray-200 gap-2">
-      <div class="text-sm text-gray-600">
-        <span class="font-medium">1-10</span> of <span class="font-medium">50</span>
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4 mt-8">
+      <div>
+        <h2 class="text-lg text-gray-600 mt-1">Designations</h2>
       </div>
-      <div class="flex items-center gap-2">
-        <button class="p-2 bg-white border border-gray-300 rounded-md hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+      <button 
+        (click)="masterService.toggleShowDesignationPopup()"
+        type="button" 
+        class="inline-flex items-center gap-x-2 rounded-xl
+          text-gray-800 px-4 py-2 text-xs font-semibold shadow-md hover:shadow-lg hover:scale-[1.02] hover:border-indigo-200
+          transition-all duration-200 ease-out bg-gray-200 border border-transparent focus:outline-none 
+          focus:ring-2 focus:ring-indigo-100/40 active:scale-[0.98] cursor-pointer">
+        <svg class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
           </svg>
-        </button>
-        <button class="p-2 bg-white border border-gray-300 rounded-md hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-          </svg>
-        </button>
+          Add Designation
+      </button>
+    </div>
+
+    <div class="bg-white shadow-lg rounded-xl overflow-hidden border border-gray-200">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody class="bg-white divide-y divide-gray-100">
+              @for (designation of masterService.designations(); track designation.id) {
+                  <tr class="hover:bg-gray-100 transition-colors group">
+                    <td class="px-4 py-2 border border-gray-100 whitespace-nowrap text-sm text-gray-500 text-center">{{ designation.id }}</td>
+                    <td class="px-4 py-2 border border-gray-100 whitespace-nowrap text-sm text-gray-800 font-medium">{{ designation.name }}</td>
+                    <td class="px-4 py-2 border border-gray-100 whitespace-nowrap">
+                      <span class="px-3 py-1 text-xs font-semibold rounded-full">
+                          {{ designation.status | titlecase }}
+                      </span>
+                    </td>
+                    <td class="px-4 py-2 whitespace-nowrap text-center">
+                        <button (click)="editDesignation(designation)" class="text-gray-500 hover:text-gray-900 font-semibold opacity-100 group-hover:opacity-100 transition-opacity text-xs cursor-pointer">
+                            Edit
+                        </button>
+                    </td>
+                  </tr>
+              }
+
+              @if (masterService.designations().length === 0) {
+            <tr>
+              <td colspan="4" class="px-6 py-4 text-center text-gray-400">No designations found.</td>
+            </tr>
+              }
+
+          </tbody>
+        </table>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-between px-6 py-3 bg-gray-50 border-t border-gray-200 gap-2">
+        <div class="text-sm text-gray-600">
+          <span class="font-medium">1-10</span> of <span class="font-medium">50</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="p-2 bg-white border border-gray-300 rounded-md hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+            </svg>
+          </button>
+          <button class="p-2 bg-white border border-gray-300 rounded-md hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<div
-  class="fixed inset-0 bg-gray-800/50 backdrop-blur-xs transition-opacity z-40 flex items-center justify-center text-xs"
-  [class.opacity-0]="!masterService.showDesignationAddPopup()"
-  [class.pointer-events-none]="!masterService.showDesignationAddPopup()"
->
+@if (masterService.showDesignationAddPopup()) {
   <div
-    class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-4 relative transition-all duration-400 ease-out transform"
-    [ngClass]="{
-      '-translate-y-full opacity-0': !masterService.showDesignationAddPopup(),
-      'translate-y-0 opacity-100': masterService.showDesignationAddPopup()
-    }"
+    class="fixed inset-0 bg-gray-800/50 backdrop-blur-xs transition-opacity z-40 flex items-center justify-center text-xs"
+    [class.opacity-0]="!masterService.showDesignationAddPopup()"
+    [class.pointer-events-none]="!masterService.showDesignationAddPopup()"
   >
-    <button
-      (click)="masterService.toggleShowDesignationPopup()"
-      type="button"
-      class="absolute top-3 text-lg right-3 text-gray-400 hover:text-gray-700 transition cursor-pointer"
+    <div
+      class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-4 relative transition-all duration-400 ease-out transform"
+      [ngClass]="{
+        '-translate-y-full opacity-0': !masterService.showDesignationAddPopup(),
+        'translate-y-0 opacity-100': masterService.showDesignationAddPopup()
+      }"
     >
-      ✕
-    </button>
-
-    <h2 class="text-lg font-semibold text-gray-800 mb-4 border-b border-gray-200 py-2">Add Designation</h2>
-    <form
-        [formGroup]="masterService.designationForm"
-        (ngSubmit)="onSubmit()"
-        class="p-6 max-w-md mx-auto space-y-5"
+      <button
+        (click)="masterService.toggleShowDesignationPopup()"
+        type="button"
+        class="absolute top-3 text-lg right-3 text-gray-400 hover:text-gray-700 transition cursor-pointer"
       >
-        <div>
-          <label class="block text-gray-700 font-medium mb-1">Designation Name</label>
-          <input
-            type="text"
-            formControlName="name"
-            placeholder="Enter designation name"
-            class="w-full rounded-xl border border-gray-100 p-2 text-xs text-gray-600 focus:outline-none focus:border-gray-400"
-          />
-          @if (masterService.designationForm.get('name')?.touched && masterService.designationForm.get('name')?.invalid) {
-            <small
-              class="text-red-500"
-            >
-              Name is required (min 3 chars)
-            </small>
-          }
-        </div>
+        ✕
+      </button>
 
-        <div>
-          <label class="block text-gray-700 font-medium mb-1">Status</label>
-          <select
-            formControlName="status"
-            class="w-full rounded-xl border border-gray-100 p-2 text-xs text-gray-600 focus:outline-none focus:border-gray-400"
-          >
-            <option value="" disabled selected>Select status</option>
-            @for (status of masterService.statuses; track $index) {
-              <option [value]="status.value">{{ status.value | titlecase }}</option>
+      <h2 class="text-md font-semibold text-gray-800 mb-2 border-b border-gray-200 py-2">Add Designation</h2>
+      <form
+          [formGroup]="masterService.designationForm"
+          (ngSubmit)="onSubmit()"
+          class="p-4 max-w-md mx-auto space-y-3"
+        >
+          <div>
+            <label class="block text-gray-700 font-medium mb-1">Designation Name</label>
+            <input
+              type="text"
+              formControlName="name"
+              placeholder="Enter designation name"
+              class="w-full rounded-xl border border-gray-100 p-2 text-xs text-gray-600 focus:outline-none focus:border-gray-400"
+            />
+            @if (masterService.designationForm.get('name')?.touched && masterService.designationForm.get('name')?.invalid) {
+              <small
+                class="text-red-500"
+              >
+                Name is required (min 3 chars)
+              </small>
             }
-          </select>
-          @if (masterService.designationForm.get('status')?.touched && masterService.designationForm.get('status')?.invalid) {
-            <small
-              class="text-red-500"
+          </div>
+
+          <div>
+          <label class="block text-gray-700 font-medium mb-1">Status</label>
+          
+          <div class="relative w-full">
+            
+            <select
+              formControlName="status"
+              class="
+                w-full rounded-xl border border-gray-200 p-2 pr-10
+                text-sm text-gray-600 
+                focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500
+                hover:border-gray-400
+                transition-colors duration-200 ease-in-out
+                appearance-none 
+              "
             >
+              <option value="" disabled selected>Select status</option>
+              @for (status of masterService.statuses; track $index) {
+                <option [value]="status.value">{{ status.value | titlecase }}</option>
+              }
+            </select>
+            
+            <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+              <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+              </svg>
+            </div>
+
+          </div>
+          
+          @if (masterService.designationForm.get('status')?.touched && masterService.designationForm.get('status')?.invalid) {
+            <small class="text-red-500 mt-1">
               Please select a status
             </small>
           }
         </div>
 
-        <button
-          type="submit"
-          class="bg-orange-500 text-white w-full py-2 rounded-lg hover:bg-orange-600 transition"
-        >
-          Add Designation
-        </button>
-      </form>
+          <button
+            type="submit"
+            class="items-center gap-x-2 rounded-xl w-full text-gray-800 px-4 py-2 text-xs font-semibold shadow-md hover:shadow-lg hover:scale-[1.02] hover:border-indigo-200 transition-all duration-200 ease-out bg-gray-200 border border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-100/40 active:scale-[0.98] cursor-pointer"
+          >
+            Add Designation
+          </button>
+        </form>
+    </div>
   </div>
-</div>
+}
 
 
 @if (isOpen) {

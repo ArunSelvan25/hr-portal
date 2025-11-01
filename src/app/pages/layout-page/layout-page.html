@@ -1,7 +1,7 @@
-<div class="flex h-screen bg-gray-200">
+<div class="flex h-screen bg-[#f8f9fb]">
   <!-- Sidebar -->
   <aside
-    class="hidden md:flex md:flex-col w-12 hover:w-40 bg-white transition-all duration-300 backdrop-blur-xl shadow-lg overflow-hidden"
+    class="hidden md:flex md:flex-col w-12 hover:w-38 transition-all duration-300 backdrop-blur-xl overflow-hidden"
   >
     <app-sidebar-component></app-sidebar-component>
   </aside>
@@ -10,14 +10,14 @@
   <div class="flex-1 flex flex-col">
     <!-- Navbar -->
     <header
-      class="sticky top-0 z-40 backdrop-blur-md border-b border-gray-100 shadow-xs bg-white"
+      class="sticky top-0 z-40 backdrop-blur-md"
     >
       <app-navbar-component></app-navbar-component>
     </header>
 
     <!-- Page Content -->
     <main
-      class="flex-1 overflow-y-auto p-2 md:p-4"
+      class="flex-1 px-4 top-10 md:pl-2"
     >
       <router-outlet></router-outlet>
     </main>
