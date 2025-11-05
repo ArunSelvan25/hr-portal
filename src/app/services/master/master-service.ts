@@ -76,11 +76,20 @@ export class MasterService {
 
   // Forms
   designationForm!: FormGroup;
+  teamForm!: FormGroup;
 
   buildDesignationForm(designation: any = null) {
     this.designationForm = this.fb.group({
       name: [designation ? designation.name : '', [Validators.required, Validators.minLength(3)]],
       status: [designation ? designation.status : '', [Validators.required]],
+    });
+  }
+
+  buildTeamForm(team: any = null) {
+    this.teamForm = this.fb.group({
+      name: [team ? team.name : '', [Validators.required, Validators.minLength(3)]],
+      status: [team ? team.status : '', [Validators.required]],
+      designations: [team ? team.designations || [] : [], [Validators.required]]
     });
   }
 
@@ -125,6 +134,23 @@ export class MasterService {
     }
 
     setTimeout(() => this.toggleShowDesignationPopup(false), 400);
+  }
+
+  onSubmitTeamForm() {
+    if (this.teamForm.invalid) return;
+
+    const formValue = this.teamForm.value;
+    console.log('this.teamForm.value', this.teamForm.value);
+     this.teamsList.set([
+        {
+          id: this.teamsList().length + 1,
+          name: formValue.name,
+          status: formValue.status,
+          roles: formValue.designations
+        },
+        ...this.teamsList(),
+      ]);
+    
   }
 
 }
