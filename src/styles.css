@@ -1,1 +1,64 @@
 @import "tailwindcss";
+
+@layer utilities {
+  /* 🌈 Modern, Minimal Scrollbar */
+  .scrollbar-modern {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 116, 139, 0.4) transparent;
+  }
+
+  .scrollbar-modern::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-modern::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+  }
+
+  .scrollbar-modern::-webkit-scrollbar-thumb {
+    background-color: rgba(156, 163, 175, 0.6); /* gray-400 */
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+    transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  }
+
+  .scrollbar-modern::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(75, 85, 99, 0.8); /* gray-600 */
+  }
+
+  /* 🧡 Optional: Accent version (your brand color #ff6c1a) */
+  .scrollbar-accent::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 108, 26, 0.7);
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+    transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  }
+
+  .scrollbar-accent::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 108, 26, 1);
+  }
+
+  /* 🌙 Dark mode support */
+  .dark .scrollbar-modern::-webkit-scrollbar-thumb {
+    background-color: rgba(107, 114, 128, 0.6); /* gray-500 */
+  }
+
+  .dark .scrollbar-modern::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(156, 163, 175, 0.8); /* gray-400 */
+  }
+
+  .dark .scrollbar-modern::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Firefox fallback */
+  .scrollbar-modern {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(156, 163, 175, 0.6) transparent;
+  }
+}
+

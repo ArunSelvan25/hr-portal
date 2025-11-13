@@ -17,8 +17,10 @@ export class SidebarComponent {
   sidebarMenus = signal([
     { id: 1, name: 'Dashboard', link: 'dashboard', icon: 'fa-home' },
     { id: 2, name: 'Teams', link: 'teams', icon: 'fa-users' },
-    { id: 3, name: 'Profile', link: 'profile', icon: 'fa-user' },
-    { id: 4, name: 'Settings', link: 'settings', icon: 'fa-cog' }
+    { id: 3, name: 'Employees', link: 'employees', icon: 'fa-user-tie' },
+    { id: 4, name: 'Sheet', link: 'sheet', icon: 'fa-bars' },
+    { id: 5, name: 'Profile', link: 'profile', icon: 'fa-user' },
+    { id: 6, name: 'Settings', link: 'settings', icon: 'fa-cog' }
   ]);
 
   // Signal to track current active URL

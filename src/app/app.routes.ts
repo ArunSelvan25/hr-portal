@@ -5,6 +5,7 @@ import { LoginPage } from './pages/login-page/login-page';
 import { ProfilePage } from './pages/profile-page/profile-page';
 import { SettingsPage } from './pages/settings-page/settings-page';
 import { RoleMasterPage } from './pages/role-master-page/role-master-page';
+import { TaskSheetPage } from './pages/task-sheet-page/task-sheet-page';
 
 export const routes: Routes = [
     {
@@ -22,6 +23,14 @@ export const routes: Routes = [
             {
                 path: 'teams',
                 component: RoleMasterPage
+            },
+            {
+              path: 'employees',
+              component: RoleMasterPage
+            },
+            {
+              path: 'sheet',
+              component: TaskSheetPage
             },
             {
                 path: 'profile',

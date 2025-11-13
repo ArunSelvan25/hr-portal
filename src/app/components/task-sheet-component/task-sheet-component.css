@@ -1,0 +1,82 @@
+table {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed; /* Keeps columns aligned */
+}
+
+th,
+td {
+  border: 1px solid #d1d5db; /* gray-300 */
+  padding: 0;
+  vertical-align: middle;
+  position: relative; /* Needed for pseudo hover effect */
+}
+
+input,
+textarea,
+select {
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-size: 0.875rem;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding: 0.25rem 0.5rem;
+  box-sizing: border-box;
+  line-height: 1.25rem;
+}
+
+/* Make sure input fills its cell */
+td > * {
+  width: 100%;
+  height: 100%;
+}
+
+/* --- 🔸 Hover effect on table cells (not inputs) --- */
+tbody tr:hover td {
+  background-color: #f3f4f6; /* gray-100, subtle Excel-like hover */
+}
+
+/* Remove any outline or highlight from input hover itself */
+input:hover,
+textarea:hover,
+select:hover {
+  background-color: transparent;
+  outline: none;
+  box-shadow: none;
+}
+
+/* Keep headers clean */
+thead th {
+  background-color: #f3f4f6; /* gray-100 */
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Highlight entire cell when an input inside it is focused */
+td:focus-within {
+  outline: 2px solid #808080;
+  outline-offset: -1px;
+  background-color: #fff8f3; /* subtle warm background for focus */
+  z-index: 1; /* keeps focus border above other cells */
+}
+
+/* Optional: Prevent double focus (input already has focus state) */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
+textarea {
+  overflow: hidden; /* hides scrollbar while resizing */
+  transition: height 0.1s ease; /* smooth animation */
+}
+
+
+@media (max-width: 1024px) {
+  table col:nth-child(4) { width: 30%; } /* More width for work description */
+  table col:nth-child(9) { width: 15%; } /* Reason for delay */
+}
+

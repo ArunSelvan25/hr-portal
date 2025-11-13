@@ -10,7 +10,6 @@ export interface DesignationInterface {
   providedIn: 'root'
 })
 
-
 export class MasterService {
 
   // Injectors
@@ -21,6 +20,7 @@ export class MasterService {
     { value: 'active' },
     { value: 'inactive' },
   ];
+  editingTeamId: number | null = null;
 
   // Signals
   designations = signal<DesignationInterface[]>([
@@ -35,9 +35,9 @@ export class MasterService {
   ]);
 
   teamsList = signal([
-    { id: 1, 
-      name: "PHP", 
-      status: "active", 
+    { id: 1,
+      name: "PHP",
+      status: "active",
       roles: [
         { id: 1, name: "Intern", status: "active" },
         { id: 2, name: "Trainee Software Engineer", status: "active" },
@@ -46,11 +46,11 @@ export class MasterService {
         { id: 5, name: "Software Engineer", status: "active" },
         { id: 7, name: "Back-End Developer", status: "active" },
         { id: 8, name: "Full-Stack Developer", status: "active" },
-      ] 
+      ]
     },
-    { id: 2, 
-      name: "Angular", 
-      status: "active", 
+    { id: 2,
+      name: "Angular",
+      status: "active",
       roles: [
         { id: 1, name: "Intern", status: "active" },
         { id: 2, name: "Trainee Software Engineer", status: "active" },
@@ -58,20 +58,21 @@ export class MasterService {
         { id: 4, name: "Associate Software Engineer", status: "active" },
         { id: 5, name: "Software Engineer", status: "active" },
         { id: 6, name: "Front-End Developer", status: "active" },
-      ] 
+      ]
     },
-    { id: 3, 
-      name: "QA", 
-      status: "active", 
+    { id: 3,
+      name: "QA",
+      status: "active",
       roles: [
         { id: 1, name: "Intern", status: "active" },
         { id: 5, name: "Software Engineer", status: "active" },
-      ] 
+      ]
     },
   ]);
 
   showDesignationAddPopup = signal(false);
-  isEditMode = signal(false);
+  isDesignationEditMode = signal(false);
+  isTeamEditMode = signal(false);
   editingDesignationId: number | null = null;
 
   // Forms
@@ -89,15 +90,15 @@ export class MasterService {
     this.teamForm = this.fb.group({
       name: [team ? team.name : '', [Validators.required, Validators.minLength(3)]],
       status: [team ? team.status : '', [Validators.required]],
-      designations: [team ? team.designations || [] : [], [Validators.required]]
+      designations: [team ? team.designations || [] : [], [Validators.required]],
     });
   }
 
   toggleShowDesignationPopup(editMode = false, designation: any = null) {
     const newValue = !this.showDesignationAddPopup();
     this.showDesignationAddPopup.set(newValue);
-    this.isEditMode.set(editMode);
-    
+    this.isDesignationEditMode.set(editMode);
+
     if (newValue) {
       if (editMode && designation) {
         this.editingDesignationId = designation.id;
@@ -114,8 +115,8 @@ export class MasterService {
 
     const formValue = this.designationForm.value;
     console.log('this.designationForm.value', this.designationForm.value);
-    
-    if (this.isEditMode()) {
+
+    if (this.isDesignationEditMode()) {
       const updated = this.designations().map(item =>
         item.id === this.editingDesignationId
           ? { ...item, name: formValue.name, status: formValue.status }
@@ -140,17 +141,47 @@ export class MasterService {
     if (this.teamForm.invalid) return;
 
     const formValue = this.teamForm.value;
-    console.log('this.teamForm.value', this.teamForm.value);
-     this.teamsList.set([
-        {
-          id: this.teamsList().length + 1,
-          name: formValue.name,
-          status: formValue.status,
-          roles: formValue.designations
-        },
-        ...this.teamsList(),
-      ]);
-    
+
+    if (this.isTeamEditMode()) {
+      // 🔹 Update existing team
+      const updatedTeams = this.teamsList().map(team =>
+        team.id === this.editingTeamId
+          ? {
+              ...team,
+              name: formValue.name,
+              status: formValue.status,
+              roles: formValue.designations,
+            }
+          : team
+      );
+      this.teamsList.set(updatedTeams);
+    } else {
+      // 🔹 Add new team
+      const newTeam = {
+        id: this.teamsList().length + 1,
+        name: formValue.name,
+        status: formValue.status,
+        roles: formValue.designations,
+      };
+      this.teamsList.set([...this.teamsList(), newTeam]);
+    }
+
+    console.log('Updated Teams:', this.teamsList());
+  }
+
+  toggleTeamPopup(editMode = false, team: any = null) {
+    this.isTeamEditMode.set(editMode);
+
+    if (editMode && team) {
+      this.editingTeamId = team.id;
+      this.buildTeamForm({
+        ...team,
+        designations: team.roles || [] // map 'roles' into 'designations'
+      });
+    } else {
+      this.editingTeamId = null;
+      this.buildTeamForm();
+    }
   }
 
 }

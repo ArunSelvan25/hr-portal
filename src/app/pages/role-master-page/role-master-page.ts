@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, inject } from '@angular/core';
 import { MasterService, DesignationInterface } from '../../services/master/master-service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgClass, TitleCasePipe } from '@angular/common';
@@ -11,18 +11,23 @@ import { NgClass, TitleCasePipe } from '@angular/common';
   styleUrl: './role-master-page.css'
 })
 export class RoleMasterPage implements OnInit {
+  // Inject service
+  masterService = inject(MasterService);
+
+  // UI states
   showDesignationDropdown = false;
+  animatePopup = false;
+  isOpen = false;
+  showSlideIn = false;
 
   ngOnInit(): void {
     this.masterService.buildDesignationForm();
     this.masterService.buildTeamForm();
   }
 
-  masterService = inject(MasterService);
-  animatePopup = false;
-  isOpen = false;
-  showSlideIn = false;
-
+  /* -------------------------------
+   *  DESIGNATION POPUP METHODS
+   * ----------------------------- */
   openAddDesignation() {
     this.masterService.toggleShowDesignationPopup(true);
     setTimeout(() => (this.animatePopup = true), 10);
@@ -36,14 +41,19 @@ export class RoleMasterPage implements OnInit {
     this.masterService.onSubmitDesignationForm();
   }
 
-  onTeamSubmit() {
-    this.masterService.onSubmitTeamForm();
-    this.closePopup();
-  }
+  /* -------------------------------
+   *  TEAM POPUP METHODS (ADD + EDIT)
+   * ----------------------------- */
 
-  openPopup() {
+  openPopup(editMode = false, team: any = null) {
+    this.masterService.toggleTeamPopup(editMode, team);
     this.isOpen = true;
     setTimeout(() => (this.showSlideIn = true), 60);
+  }
+
+  editTeam(team: any) {
+    console.log('Editing team:', team);
+    this.openPopup(true, team);
   }
 
   closePopup() {
@@ -51,7 +61,21 @@ export class RoleMasterPage implements OnInit {
     setTimeout(() => (this.isOpen = false), 60);
   }
 
-  // ✅ Dropdown closing logic (must be on a method, not property)
+  onTeamSubmit() {
+    if (this.masterService.teamForm.invalid) {
+      this.masterService.teamForm.markAllAsTouched();
+      return;
+    }
+
+    this.masterService.onSubmitTeamForm();
+    this.closePopup();
+  }
+
+  /* -------------------------------
+   *  DESIGNATION MULTISELECT LOGIC
+   * ----------------------------- */
+
+  // Closes dropdown on outside click
   @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent) {
     const target = event.target as HTMLElement;
@@ -60,7 +84,7 @@ export class RoleMasterPage implements OnInit {
     }
   }
 
-  // ✅ Dropdown toggle helpers
+  // Toggles dropdown open/close
   toggleDropdown(event: MouseEvent) {
     event.stopPropagation();
     this.showDesignationDropdown = !this.showDesignationDropdown;

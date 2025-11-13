@@ -11,8 +11,6 @@ export class NavbarComponent {
   layoutService = inject(LayoutService);
 
   toggleSidebar() {
-    console.log('Sidebar state before toggle:', this.layoutService.isSidebarOpen());
     this.layoutService.isSidebarOpen.set(!this.layoutService.isSidebarOpen());
-    console.log('Sidebar state after toggle:', this.layoutService.isSidebarOpen());
   }
 }

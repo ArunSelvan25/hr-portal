@@ -1,0 +1,142 @@
+<div class="p-6">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-xl font-semibold text-gray-800">Daily Task Sheet</h2>
+    <button
+      (click)="addTask()"
+      class="bg-gray-700 text-white font-medium px-4 py-2 rounded-lg shadow">
+      + Add Task
+    </button>
+  </div>
+
+  <div class="flex gap-3 mb-3">
+    <button (click)="toggleSort()" class="bg-gray-600 text-white px-3 py-1 rounded">
+      Sort: {{ sortOrder() === 'asc' ? 'Oldest First' : 'Newest First' }}
+    </button>
+
+    <button (click)="prevPage()" class="bg-gray-500 text-white px-3 py-1 rounded">
+      Prev
+    </button>
+
+    <button (click)="nextPage()" class="bg-gray-500 text-white px-3 py-1 rounded">
+      Next
+    </button>
+
+    <span class="ml-2 text-gray-700">
+      Page {{ currentPage() }}
+    </span>
+  </div>
+
+  <form [formGroup]="form" class="min-w-3xl">
+    <div formArrayName="tasks">
+      <table class="min-w-full border border-gray-300 rounded-2xl text-sm">
+
+        <colgroup>
+          <col style="width: 10%">
+          <col style="width: 7%">
+          <col style="width: 7%">
+          <col style="width: 37%">
+          <col style="width: 5%">
+          <col style="width: 5%">
+          <col style="width: 7%">
+          <col style="width: 23%">
+          <col style="width: 5%">
+        </colgroup>
+
+        <thead>
+        <tr class="bg-gray-100 text-gray-700">
+          <th class="border border-gray-300 px-2 py-1 text-center">Date</th>
+          <th class="border border-gray-300 px-2 py-1 text-center">Project Name</th>
+          <th class="border border-gray-300 px-2 py-1 text-center">PM</th>
+          <th class="border border-gray-300 px-2 py-1 text-center">Work Description</th>
+          <th class="border border-gray-300 px-2 py-1 text-center">Hours Planned</th>
+          <th class="border border-gray-300 px-2 py-1 text-center">Hours Spent</th>
+          <th class="border border-gray-300 px-2 py-1 text-center">Status</th>
+          <th class="border border-gray-300 px-2 py-1 text-center">Comment Link</th>
+          <th class="border border-gray-300 px-2 py-1 text-center">Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+          @for (row of paginatedTasks(); let i = $index; track i) {
+            <ng-container
+              [formGroupName]="i + (currentPage() - 1) * pageSize()">
+
+              <tr class="hover:bg-gray-100">
+                <td class="border border-gray-300 p-0">
+                  <input type="date" formControlName="date"
+                         class="w-full h-full px-2 py-1 border-0 outline-none" />
+                </td>
+
+                <td class="border border-gray-300 p-0">
+                  <input formControlName="projectName"
+                         class="w-full h-full px-2 py-1 outline-none" />
+                </td>
+
+                <td class="border border-gray-300 p-0">
+                  <input formControlName="pm"
+                         class="w-full h-full px-2 py-1 border-0 outline-none" />
+                </td>
+
+                <td class="border border-gray-300 p-0">
+          <textarea formControlName="workDescription"
+                    appAutosizeDirective
+                    class="w-full h-full px-2 py-1 border-0 resize-none outline-none"></textarea>
+                </td>
+
+                <td class="border border-gray-300 text-center p-0">
+                  <input type="number" formControlName="hoursPlanned"
+                         class="w-full h-full px-2 py-1 text-center border-0 outline-none" />
+                </td>
+
+                <td class="border border-gray-300 text-center p-0">
+                  <input type="number" formControlName="hoursSpent"
+                         class="w-full h-full px-2 py-1 text-center border-0 outline-none" />
+                </td>
+
+                <td class="border border-gray-300 p-0">
+                  <select formControlName="status"
+                          class="w-full h-full px-2 py-1 border-0 outline-none">
+                    <option>Pending</option>
+                    <option>In Progress</option>
+                    <option>Completed</option>
+                  </select>
+                </td>
+
+                <td class="border border-gray-300 p-0">
+          <textarea formControlName="commentLink"
+                    appAutosizeDirective
+                    placeholder="https://"
+                    class="w-full h-full px-2 py-1 border-0 resize-none outline-none"></textarea>
+                </td>
+
+                <td class="border border-gray-300 text-center p-1">
+                  <button type="button"
+                          (click)="saveTask(i)"
+                          class="bg-gray-100 text-black px-3 py-1 rounded mr-1">
+                    Save
+                  </button>
+
+                  <button type="button"
+                          (click)="duplicateTask(i)"
+                          class="bg-blue-500 text-white px-3 py-1 rounded mr-1">
+                    Duplicate
+                  </button>
+
+                  <button type="button"
+                          (click)="removeTask(i + (currentPage()-1)*pageSize())"
+                          class="bg-gray-500 text-white px-3 py-1 rounded">
+                    Delete
+                  </button>
+                </td>
+
+              </tr>
+
+            </ng-container>
+          }
+        </tbody>
+
+
+      </table>
+    </div>
+  </form>
+</div>
