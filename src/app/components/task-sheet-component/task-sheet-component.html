@@ -34,12 +34,12 @@
           <col style="width: 10%">
           <col style="width: 7%">
           <col style="width: 7%">
-          <col style="width: 37%">
+          <col style="width: 35%">
           <col style="width: 5%">
           <col style="width: 5%">
           <col style="width: 7%">
           <col style="width: 23%">
-          <col style="width: 5%">
+          <col style="width: 7%">
         </colgroup>
 
         <thead>
@@ -57,84 +57,73 @@
         </thead>
 
         <tbody>
-          @for (row of paginatedTasks(); let i = $index; track i) {
-            <ng-container
-              [formGroupName]="i + (currentPage() - 1) * pageSize()">
+          <ng-container
+          *ngFor="let row of paginatedTasks(); let i = index"
+          [formGroupName]="i + (currentPage() - 1) * pageSize()">
+          <tr class="hover:bg-gray-100">
+            <td class="border border-gray-300 p-0">
+              <input type="date" formControlName="date" class="w-full h-full px-2 py-1 border-0 outline-none" />
+            </td>
 
-              <tr class="hover:bg-gray-100">
-                <td class="border border-gray-300 p-0">
-                  <input type="date" formControlName="date"
-                         class="w-full h-full px-2 py-1 border-0 outline-none" />
-                </td>
+            <td class="border border-gray-300 p-0">
+              <input formControlName="projectName" class="w-full h-full px-2 py-1 outline-none" />
+            </td>
 
-                <td class="border border-gray-300 p-0">
-                  <input formControlName="projectName"
-                         class="w-full h-full px-2 py-1 outline-none" />
-                </td>
+            <td class="border border-gray-300 p-0">
+              <input formControlName="pm" class="w-full h-full px-2 py-1 border-0 outline-none" />
+            </td>
 
-                <td class="border border-gray-300 p-0">
-                  <input formControlName="pm"
-                         class="w-full h-full px-2 py-1 border-0 outline-none" />
-                </td>
+            <td class="border border-gray-300 p-0">
+              <textarea formControlName="workDescription"
+                        appAutosizeDirective
+                        class="w-full h-full px-2 py-1 border-0 resize-none outline-none"></textarea>
+            </td>
 
-                <td class="border border-gray-300 p-0">
-          <textarea formControlName="workDescription"
-                    appAutosizeDirective
-                    class="w-full h-full px-2 py-1 border-0 resize-none outline-none"></textarea>
-                </td>
+            <td class="border border-gray-300 text-center p-0">
+              <input type="number" formControlName="hoursPlanned" class="w-full h-full px-2 py-1 text-center border-0 outline-none" />
+            </td>
 
-                <td class="border border-gray-300 text-center p-0">
-                  <input type="number" formControlName="hoursPlanned"
-                         class="w-full h-full px-2 py-1 text-center border-0 outline-none" />
-                </td>
+            <td class="border border-gray-300 text-center p-0">
+              <input type="number" formControlName="hoursSpent" class="w-full h-full px-2 py-1 text-center border-0 outline-none" />
+            </td>
 
-                <td class="border border-gray-300 text-center p-0">
-                  <input type="number" formControlName="hoursSpent"
-                         class="w-full h-full px-2 py-1 text-center border-0 outline-none" />
-                </td>
+            <td class="border border-gray-300 p-0">
+              <select formControlName="status" class="w-full h-full px-2 py-1 border-0 outline-none">
+                <option>Pending</option>
+                <option>In Progress</option>
+                <option>Completed</option>
+              </select>
+            </td>
 
-                <td class="border border-gray-300 p-0">
-                  <select formControlName="status"
-                          class="w-full h-full px-2 py-1 border-0 outline-none">
-                    <option>Pending</option>
-                    <option>In Progress</option>
-                    <option>Completed</option>
-                  </select>
-                </td>
+            <td class="border border-gray-300 p-0">
+              <textarea formControlName="commentLink"
+                        appAutosizeDirective
+                        placeholder="https://"
+                        class="w-full h-full px-2 py-1 border-0 resize-none outline-none"></textarea>
+            </td>
 
-                <td class="border border-gray-300 p-0">
-          <textarea formControlName="commentLink"
-                    appAutosizeDirective
-                    placeholder="https://"
-                    class="w-full h-full px-2 py-1 border-0 resize-none outline-none"></textarea>
-                </td>
+            <td class="border border-gray-300 text-center p-1">
+              <button type="button"
+                      (click)="saveTask(i)"
+                      class="bg-gray-100 text-black px-3 py-1 rounded mr-1">
+                Save
+              </button>
 
-                <td class="border border-gray-300 text-center p-1">
-                  <button type="button"
-                          (click)="saveTask(i)"
-                          class="bg-gray-100 text-black px-3 py-1 rounded mr-1">
-                    Save
-                  </button>
+              <button type="button"
+                      (click)="duplicateTask(i)"
+                      class="bg-blue-500 text-white px-3 py-1 rounded mr-1">
+                Duplicate
+              </button>
 
-                  <button type="button"
-                          (click)="duplicateTask(i)"
-                          class="bg-blue-500 text-white px-3 py-1 rounded mr-1">
-                    Duplicate
-                  </button>
-
-                  <button type="button"
-                          (click)="removeTask(i + (currentPage()-1)*pageSize())"
-                          class="bg-gray-500 text-white px-3 py-1 rounded">
-                    Delete
-                  </button>
-                </td>
-
-              </tr>
-
-            </ng-container>
-          }
+              <button type="button"
+                      (click)="removeTask(i + (currentPage()-1)*pageSize())"
+                      class="bg-gray-500 text-white px-3 py-1 rounded">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </ng-container>
         </tbody>
-
 
       </table>
     </div>
